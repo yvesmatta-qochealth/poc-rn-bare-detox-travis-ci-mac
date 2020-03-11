@@ -86,3 +86,13 @@ Read and update to get tests to pass:
 - https://github.com/wix/Detox/blob/master/docs/Introduction.WritingFirstTest.md
 
 By the end, you should have passing tests
+
+## Add release testing
+
+Follow:
+- https://reactnativetesting.io/ci/intro.html#release-build
+
+## Add travisCI for ios e2e
+
+Follow:
+- https://reactnativetesting.io/ci/travis-ci.html#reference
