@@ -92,7 +92,42 @@ By the end, you should have passing tests
 Follow:
 - https://reactnativetesting.io/ci/intro.html#release-build
 
+## And jest and simple sum test file
+
+Add the following script to `package.json`
+
+```
+"test": "jest",
+```
+
+Add the following jest config to target tests in src folder into `package.json`
+
+```
+
+  "jest": {
+    "roots": [
+      "src/"
+    ]
+  },
+
+```
+Add simple sanity check in `sum.test.js` to `src` directory
+
+```
+/* eslint-env jest */
+
+describe('sum', () => {
+  test('add 1 + 2', () => {
+    expect(1 + 2).toBe(3)
+  })
+})
+```
+
 ## Add travisCI for ios e2e
 
 Follow:
 - https://reactnativetesting.io/ci/travis-ci.html#reference
+
+Make sure to allow access for specific repo on travis ci
+
+You can manually trigger or within `.travis.yml` to trigger on pull request
