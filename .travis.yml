@@ -1,6 +1,4 @@
 language: node_js
-node_js:
-  - "$TRAVIS_NODE_VERSION"
 
 # clones repository with the quiet flag
 git:
@@ -13,6 +11,7 @@ branches:
   - develop
 
 install:
+- nvm use && nvm alias default $(cat .nvmrc)
 - npm install -g react-native-cli
 - npm install -g detox-cli
 - npm install
