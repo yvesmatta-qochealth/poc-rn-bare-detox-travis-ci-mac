@@ -12,9 +12,6 @@ branches:
   - master
   - develop
 
-cache:
-  npm: true
-
 install:
 - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 - export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -26,13 +23,10 @@ install:
 - npm install -g detox-cli
 - npm install
 
-_shared_job: &shared_job
-  script: echo "shared script config"
-
 jobs:
   include:
     - name: Unit tests
-    - script: npm run test:unit
+      script: npm run test:unit
     - name: Integration iOS tests
       os: osx
       osx_image: xcode11.3
