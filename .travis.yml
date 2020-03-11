@@ -1,6 +1,4 @@
 env:
-  - TEST_SUITE=unit
-  - TEST_SUITE=integration:ios:release
   global:
   - NODE_VERSION=stable
 
@@ -35,5 +33,6 @@ matrix:
       script:
         - npm install
         - cd ios && pod install && cd ..
+        - npm run test:unit
         - npm run build:integration:ios:release
-        - npm run test:$TEST_SUITE
+        - npm run test:integration:ios:release
