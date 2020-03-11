@@ -12,6 +12,9 @@ branches:
   - master
   - develop
 
+cache:
+  npm: true
+
 install:
 - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 - export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -33,6 +36,7 @@ jobs:
       language: objective-c
       cache:
         cocoapods: true
+      podfile: ios/Podfile
       before_install:
         - brew tap wix/brew
         - brew install applesimutils
