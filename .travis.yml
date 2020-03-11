@@ -15,10 +15,6 @@ cache:
   directories:
     - $HOME/.npm
 
-before_install:
-  - brew tap wix/brew
-  - brew install applesimutils
-
 install:
 - npm install -g react-native-cli
 - npm install -g detox-cli
@@ -35,6 +31,9 @@ jobs:
       cache:
         cocoapods: true
       podfile: ./ios/Podfile
+      before_install:
+        - brew tap wix/brew
+        - brew install applesimutils
       script:
         - npm run ios:pod:install
         - npm run detox:ios:release:build > /dev/null
