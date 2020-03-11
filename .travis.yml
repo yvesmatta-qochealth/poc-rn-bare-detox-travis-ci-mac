@@ -26,11 +26,10 @@ matrix:
       before_install:
         - brew tap wix/brew
         - brew install applesimutils
-      script:
+      install:
         - npm install
+        - cd ios && pod install && cd ..
+      script:
         - npm run test
-        - cd ios
-        - pod install
-        - cd ..
         - detox build --configuration ios.sim.release
         - detox test --configuration ios.sim.release --cleanup
