@@ -34,5 +34,5 @@ matrix:
         - npm install
         - cd ios && pod install && cd ..
         - npm run test:unit
-        - npm run build:integration:ios:release > ./detox-build.log
+        - npm run build:integration:ios:release > ./detox-build.log # output to log file to fix log limit
         - npm run test:integration:ios:release
