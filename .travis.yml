@@ -1,5 +1,5 @@
 language: node_js
-node_js: 'lts/*' # or another
+node_js: 'lts/*'
 
 # clones repository with the quiet flag
 git:
@@ -11,10 +11,13 @@ branches:
   - master
   - develop
 
-
 cache:
   directories:
     - $HOME/.npm
+
+before_install:
+  - brew tap wix/brew
+  - brew install applesimutils
 
 install:
 - npm install -g react-native-cli
@@ -31,13 +34,8 @@ jobs:
       language: objective-c
       cache:
         cocoapods: true
-        directories:
-          - $HOME/.npm
       podfile: ./ios/Podfile
-      before_install:
-        - brew tap wix/brew
-        - brew install applesimutils
       script:
-        - cd ios && pod install && cd ..
-        - npm run build:integration:ios:release > ./detox-build.log # output to log file to fix log limit
-        - npm run test:integration:ios:release
+        - npm run ios:pod:install
+        - npm run detox:ios:release:build > /dev/null
+        - npm run detox:ios:release:test

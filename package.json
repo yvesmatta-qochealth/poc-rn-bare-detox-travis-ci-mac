@@ -2,12 +2,13 @@
   "name": "pox-rn-bare-detox-travis-ci-mac",
   "version": "0.0.1",
   "scripts": {
-    "build:integration:ios:release": "detox build --configuration ios.sim.release",
+    "detox:ios:release:build": "detox build -c ios.sim.release",
+    "detox:ios:release:test": "detox test -c ios.sim.release --cleanup --loglevel trace",
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "ios:pod:install": "cd ./ios && pod install && cd ..",
     "test:unit": "jest",
-    "test:integration:ios:release": "detox test --configuration ios.sim.release",
     "web": "expo start --web",
     "postinstall": "jetify"
   },
