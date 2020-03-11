@@ -1,6 +1,4 @@
 language: node_js
-node_js:
-  - $TRAVIS_NODE_VERSION
 
 # clones repository with the quiet flag
 git:
