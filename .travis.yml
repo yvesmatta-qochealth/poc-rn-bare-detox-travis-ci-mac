@@ -1,6 +1,5 @@
-env:
-  global:
-  - NODE_VERSION=stable
+language: node_js
+node_js: 'lts/*' # or another
 
 # clones repository with the quiet flag
 git:
@@ -12,17 +11,7 @@ branches:
   - master
   - develop
 
-cache:
-  directories:
-    - $HOME/.npm
-
 install:
-- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-- export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-- nvm install $NODE_VERSION
-- nvm use $NODE_VERSION
-- nvm alias default $NODE_VERSION
-
 - npm install -g react-native-cli
 - npm install -g detox-cli
 - npm ci
