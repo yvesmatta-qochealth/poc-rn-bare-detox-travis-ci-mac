@@ -1,4 +1,6 @@
 {
+  "name": "pox-rn-bare-detox-travis-ci-mac",
+  "version": "0.0.1",
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
@@ -20,11 +22,25 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "babel-jest": "~24.9.0",
-    "jest": "~24.9.0",
+    "babel-preset-expo": "~8.0.0",
+    "detox": "^15.5.0",
+    "jest": "^24.9.0",
     "jetifier": "~1.6.4",
     "metro-react-native-babel-preset": "~0.56.0",
-    "react-test-renderer": "~16.9.0",
-    "babel-preset-expo": "~8.0.0"
+    "react-test-renderer": "~16.9.0"
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/POCDetoxWithTravis.app",
+        "build": "xcodebuild -workspace ios/POCDetoxWithTravis.xcworkspace -scheme POCDetoxWithTravis -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "device": {
+          "type": "iPhone 11 Pro"
+        }
+      }
+    },
+    "test-runner": "jest"
   },
   "private": true
 }
