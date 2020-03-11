@@ -36,6 +36,25 @@
     ]
   },
   "detox": {
+    "artifacts": {
+      "rootDir": ".artifacts",
+      "plugins": {
+        "instruments": { "enabled": false },
+        "log": { "enabled": true },
+        "screenshot": {
+          "shouldTakeAutomaticSnapshots": true,
+          "keepOnlyFailedTestsArtifacts": true
+        },
+        "video": {
+          "android": {
+            "bitRate": 4000000
+          },
+          "simulator": {
+            "codec": "hevc"
+          }
+        }
+      }
+    },
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/POCDetoxWithTravis.app",
