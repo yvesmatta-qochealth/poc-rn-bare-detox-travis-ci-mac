@@ -11,10 +11,15 @@ branches:
   - master
   - develop
 
+
+cache:
+  directories:
+    - $HOME/.npm
+
 install:
 - npm install -g react-native-cli
 - npm install -g detox-cli
-- npm ci
+- npm install
 
 jobs:
   include:
@@ -28,7 +33,7 @@ jobs:
         cocoapods: true
         directories:
           - $HOME/.npm
-      podfile: ios/Podfile
+      podfile: ./ios/Podfile
       before_install:
         - brew tap wix/brew
         - brew install applesimutils
