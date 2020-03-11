@@ -12,6 +12,9 @@ branches:
   - master
   - develop
 
+cache:
+  npm: true
+
 install:
 - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 - export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -21,18 +24,25 @@ install:
 
 - npm install -g react-native-cli
 - npm install -g detox-cli
+- npm install
 
-matrix:
+_shared_job: &shared_job
+  script: echo "shared script config"
+
+jobs:
   include:
-    - os: osx
+    - name: Unit tests
+    - script: npm run test:unit
+    - name: Integration iOS tests
+      os: osx
       osx_image: xcode11.3
       language: objective-c
+      cache:
+        cocoapods: true
       before_install:
         - brew tap wix/brew
         - brew install applesimutils
       script:
-        - npm install
         - cd ios && pod install && cd ..
-        - npm run test:unit
         - npm run build:integration:ios:release > ./detox-build.log # output to log file to fix log limit
         - npm run test:integration:ios:release
