@@ -1,6 +1,12 @@
 env:
+  - TEST_SUITE=unit
+  - TEST_SUITE=integration:ios:release
   global:
   - NODE_VERSION=stable
+
+# clones repository with the quiet flag
+git:
+  quiet: true
 
 # safelist
 branches:
@@ -26,10 +32,8 @@ matrix:
       before_install:
         - brew tap wix/brew
         - brew install applesimutils
-      install:
+      script:
         - npm install
         - cd ios && pod install && cd ..
-      script:
-        - npm run test
-        - detox build --configuration ios.sim.release
-        - detox test --configuration ios.sim.release --cleanup
+        - npm run build:integration:ios:release
+        - "npm run test:$TEST_SUITE"
