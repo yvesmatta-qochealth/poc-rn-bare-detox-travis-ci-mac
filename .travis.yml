@@ -37,6 +37,8 @@ jobs:
       language: objective-c
       cache:
         cocoapods: true
+        directories:
+          - $HOME/.npm
       podfile: ios/Podfile
       before_install:
         - brew tap wix/brew
