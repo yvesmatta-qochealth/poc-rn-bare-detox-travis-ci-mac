@@ -39,18 +39,6 @@ jobs:
         - npm run detox:ios:release:build > /dev/null
         - npm run detox:ios:release:test
     - name: Integration Android tests
-      cache: npm
-      os: osx
-      osx_image: xcode11.3
-      language: objective-c
-      before_install:
-        - brew tap wix/brew
-        - brew install applesimutils
-      script:
-        - npm run ios:pod:install
-        - npm run detox:ios:release:build > /dev/null
-        - npm run detox:ios:release:test
-    - name: Integration Android tests
       language: android
       cache: npm
       jdk: oraclejdk8
