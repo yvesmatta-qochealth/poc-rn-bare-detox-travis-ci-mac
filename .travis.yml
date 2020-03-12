@@ -51,6 +51,7 @@ jobs:
         - build-tools-28.0.16
         - android-${ANDROID_API}
         - sys-img-x86-android-28
+        - extra
       licenses:
         - android-sdk-license-.+
     before_install:
@@ -58,7 +59,7 @@ jobs:
       # Install the rest of tools (e.g. avdmanager)
       # - sdkmanager tools
       # Create and start emulator for the script. Meant to race the install task.
-      - echo "y" | avdmanager create avd --force --name pixel_xl --device "pixel_xl" -k 'system-images;android-28;google_apis;x86'
+      - echo no | android create avd --force --name pixel_xl --device "pixel_xl" -k 'system-images;android-28;google_apis;x86'
     before_cache: "-rm -f $HOME/.gradle/caches/modules-2/modules-2.lock -rm -fr $HOME/.gradle/caches/*/plugin-resolution/"
     install:
       - npm install
