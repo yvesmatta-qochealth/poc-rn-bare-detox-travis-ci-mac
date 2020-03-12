@@ -66,11 +66,12 @@ jobs:
         - extra-android-m2repository
     before_install:
       - sdkmanager --list
+      - android list avds
       - android list targets
       # - echo no | avdmanager create avd --force --name pixel_xl --device "pixel_xl" -k 'system-images;android-28;google_apis;x86'
       # Create and start emulator for the script. Meant to race the install task.
-      - echo no | android create avd --force --name pixel_xl --device "pixel_xl" -n test -t android-28 --abi google_apis/x86
-      - emulator -avd test -no-skin -no-audio -no-window &
+      - android create avd --force --name pixel_xl -t android-28 --abi google_apis/x86
+      - emulator -avd pixel_xl -no-skin -no-audio -no-window &
       - android-wait-for-emulator
       - adb shell input keyevent 82 &
     install:
