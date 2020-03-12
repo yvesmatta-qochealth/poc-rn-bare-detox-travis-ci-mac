@@ -57,12 +57,11 @@ jobs:
     before_install:
     - openssl aes-256-cbc -K $encrypted_b6e934f6223e_key -iv $encrypted_b6e934f6223e_iv -in android/RNDetoxTravisTest.keystore.enc -out android/RNDetoxTravisTest.keystore -d
     - yes | sdkmanager "platforms;android-28"
-    - sdkmanager tools
+    - yes | sdkmanager tools
     before_cache: "-rm -f $HOME/.gradle/caches/modules-2/modules-2.lock -rm -fr $HOME/.gradle/caches/*/plugin-resolution/"
     install:
     - echo "y" | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-28;google_apis;x86"
-    - echo "no" | ls $ANDROID_HOME/tools/bin
-    - $ANDROID_HOME/tools/bin/avdmanager create avd --force --name pixel_xl --device "pixel_xl" -k 'system-images;android-28;google_apis;x86'
+    - echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name pixel_xl --device "pixel_xl" -k 'system-images;android-28;google_apis;x86'
     - "$ANDROID_HOME/emulator/emulator -list-avds"
     script:
     - npm install
