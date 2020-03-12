@@ -46,25 +46,22 @@ jobs:
     sudo: required
     android:
       components:
-      - tools
-      - tools
-      - platform-tools
-      - build-tools-28.0.16
-      - android-${ANDROID_API}
-      - sys-img-x86-android-28
+        - tools
+        - platform-tools
+        - build-tools-28.0.16
+        - android-${ANDROID_API}
+        - sys-img-x86-android-28
       licenses:
-      - android-sdk-license-.+
+        - android-sdk-license-.+
     before_install:
-    - openssl aes-256-cbc -K $encrypted_b6e934f6223e_key -iv $encrypted_b6e934f6223e_iv -in android/RNDetoxTravisTest.keystore.enc -out android/RNDetoxTravisTest.keystore -d
-    - yes | sdkmanager "platforms;android-28"
-    - yes | sdkmanager tools
-    - echo "y"
+      - openssl aes-256-cbc -K $encrypted_b6e934f6223e_key -iv $encrypted_b6e934f6223e_iv -in android/RNDetoxTravisTest.keystore.enc -out android/RNDetoxTravisTest.keystore -d
+      # Install the rest of tools (e.g. avdmanager)
+      - sdkmanager tools
+      # Create and start emulator for the script. Meant to race the install task.
+      - echo "y" | avdmanager create avd --force --name pixel_xl --device "pixel_xl" -k 'system-images;android-28;google_apis;x86'
     before_cache: "-rm -f $HOME/.gradle/caches/modules-2/modules-2.lock -rm -fr $HOME/.gradle/caches/*/plugin-resolution/"
     install:
-    - echo "y" | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-28;google_apis;x86"
-    - echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name pixel_xl --device "pixel_xl" -k 'system-images;android-28;google_apis;x86'
-    - "$ANDROID_HOME/emulator/emulator -list-avds"
+      - npm install
     script:
-    - npm install
-    - npm run detox:android:release:build
-    - npx detox test --headless -c android.emu.release --gpu swiftshader --cleanup
+      - npm run detox:android:release:build
+      - npx detox test --headless -c android.emu.release --gpu swiftshader --cleanup
