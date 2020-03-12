@@ -78,6 +78,7 @@ jobs:
       # - echo no | avdmanager create avd --force --name pixel_xl --device "pixel_xl" -k 'system-images;android-28;google_apis;x86'
       # Create Android Emulator
       - echo no | android create avd --force --name pixel_xl -t android-28 --abi google_apis/x86
+      - android list avds
       # Start Android Emulator
       - emulator -avd pixel_xl -no-skin -no-audio -no-window &
       - android-wait-for-emulator
