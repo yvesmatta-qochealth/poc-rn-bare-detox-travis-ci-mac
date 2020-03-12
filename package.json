@@ -82,7 +82,7 @@
         "build": "cd android && ./gradlew app:assembleRelease app:assembleAndroidTest -DtestBuildType=release && cd ..",
         "type": "android.emulator",
         "device": {
-          "avdName": "Pixel_2_API_28"
+          "avdName": "pixel_xl"
         }
       },
       "ios.sim.debug": {
