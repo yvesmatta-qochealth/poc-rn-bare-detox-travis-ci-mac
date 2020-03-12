@@ -60,7 +60,7 @@ jobs:
     before_install:
       - openssl aes-256-cbc -K $encrypted_b6e934f6223e_key -iv $encrypted_b6e934f6223e_iv -in android/RNDetoxTravisTest.keystore.enc -out android/RNDetoxTravisTest.keystore -d
       # Create and start emulator for the script. Meant to race the install task.
-      - echo no | android create avd --force --name pixel_xl --device "pixel_xl" --abi 'armeabi-v7a' --target 'android-28'
+      - echo no | android create avd --force --name pixel_xl --device "pixel_xl" --abi 'x86_64' --target 'android-28'
     install:
       - npm install
     script:
