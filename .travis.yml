@@ -55,7 +55,7 @@ jobs:
       licenses:
       - android-sdk-license-.+
     before_install:
-    - openssl aes-256-cbc -K $encrypted_0a6446eb3ae3_key -iv $encrypted_0a6446eb3ae3_iv -in android/RNDetoxTravisTest.keystore.enc -out android/RNDetoxTravisTest.keystore -d
+    - openssl aes-256-cbc -K $encrypted_b6e934f6223e_key -iv $encrypted_b6e934f6223e_iv -in android/RNDetoxTravisTest.keystore.enc -out android/RNDetoxTravisTest.keystore -d
     - yes | sdkmanager "platforms;android-28"
     before_cache: "-rm -f $HOME/.gradle/caches/modules-2/modules-2.lock -rm -fr $HOME/.gradle/caches/*/plugin-resolution/"
     install:
