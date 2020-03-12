@@ -126,6 +126,13 @@ jobs:
       - sdkmanager --list
       - android list avd
       - android list target
+      - openssl aes-256-cbc -K $encrypted_b6e934f6223e_key -iv $encrypted_b6e934f6223e_iv -in ./android/RNDetoxTravisTest.keystore.enc -out ./android/RNDetoxTravisTest.keystore -d
+      - npm run detox:android:release:build
+      - ~${ANDROID_HOME}/build-tools/28.0.3/zipalign -v -p 4 ./android/app/build/apk/release/app-release-unsigned.apk ./android/app/build/apk/release/app-release-aligned.apk
+      - ~${ANDROID_HOME}/build-tools/28.0.3/apksigner sign --ks ./android/RNDetoxTravisTest.keystore --out ./android/app/build/apk/release/app-release.apk ./android/app/build/apk/release/app-release-aligned.apk 
+      - ~${ANDROID_HOME}/build-tools/28.0.3/apksigner verify ./android/app/build/apk/release/app-release.apk
+      - ~${ANDROID_HOME}/build-tools/28.0.3/zipalign -v -p 4 ./android/app/build/apk/androidTest/release/app-release-androidTest.apk ./android/app/build/apk/androidTest/release/app-release-aligned.apk
+      - ~${ANDROID_HOME}/build-tools/28.0.3/apksigner sign --ks ./android/RNDetoxTravisTest.keystore --out ./android/app/build/apk/androidTest/release/app-release-androidTest.apk ./android/app/build/apk/androidTest/release/app-release-aligned.apk
+      - ~${ANDROID_HOME}/build-tools/28.0.3/apksigner verify ./android/app/build/apk/androidTest/release/app-release-androidTest.apk
     script:
-      - npm run detox:android:debug:build
-      - npm run detox:android:debug:test
+      - npm run detox:android:release:test
