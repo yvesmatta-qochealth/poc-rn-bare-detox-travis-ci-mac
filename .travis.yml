@@ -6,12 +6,14 @@ env:
   global:
     - ABI=x86_64
     - ADB_INSTALL_TIMEOUT=8
+    - APK_PATH=./android/app/build/outputs/apk
     - ANDROID_HOME=${HOME}/android-sdk
     - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
     - GRAVIS="https://raw.githubusercontent.com/DanySK/Gravis-CI/master/"
     - JDK="1.8"
     - TOOLS=${ANDROID_HOME}/tools
+    - BUILD_TOOLS=28.0.3
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools:${PATH}
     - API=28
@@ -80,7 +82,7 @@ jobs:
         - yes | sdkmanager --licenses >/dev/null; # accept all sdkmanager warnings
         - echo y | sdkmanager --no_https "platform-tools" >/dev/null;
         - echo y | sdkmanager --no_https "tools" >/dev/null; # A second time per Travis docs, gets latest versions
-        - echo y | sdkmanager --no_https "build-tools;28.0.3" >/dev/null; # Implicit gradle dependency - gradle drives changes
+        - echo y | sdkmanager --no_https "build-tools;${BUILD_TOOLS}" >/dev/null; # Implicit gradle dependency - gradle drives changes
         - echo y | sdkmanager --no_https "platforms;android-28" >/dev/null; # We need the API of the current compileSdkVersion from gradle.properties
     install:
       - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
@@ -128,11 +130,11 @@ jobs:
       - android list target
       - openssl aes-256-cbc -K $encrypted_b6e934f6223e_key -iv $encrypted_b6e934f6223e_iv -in ./android/RNDetoxTravisTest.keystore.enc -out ./android/RNDetoxTravisTest.keystore -d
       - npm run detox:android:release:build
-      - ${ANDROID_HOME}/build-tools/28.0.3/zipalign -v -p 4 ./android/app/build/apk/release/app-release-unsigned.apk ./android/app/build/apk/release/app-release-aligned.apk
-      - ${ANDROID_HOME}/build-tools/28.0.3/apksigner sign --ks ./android/RNDetoxTravisTest.keystore --out ./android/app/build/apk/release/app-release.apk ./android/app/build/apk/release/app-release-aligned.apk 
-      - ${ANDROID_HOME}/build-tools/28.0.3/apksigner verify ./android/app/build/apk/release/app-release.apk
-      - ${ANDROID_HOME}/build-tools/28.0.3/zipalign -v -p 4 ./android/app/build/apk/androidTest/release/app-release-androidTest.apk ./android/app/build/apk/androidTest/release/app-release-aligned.apk
-      - ${ANDROID_HOME}/build-tools/28.0.3/apksigner sign --ks ./android/RNDetoxTravisTest.keystore --out ./android/app/build/apk/androidTest/release/app-release-androidTest.apk ./android/app/build/apk/androidTest/release/app-release-aligned.apk
-      - ${ANDROID_HOME}/build-tools/28.0.3/apksigner verify ./android/app/build/apk/androidTest/release/app-release-androidTest.apk
+      - ${ANDROID_HOME}/build-tools/${BUILD_TOOLS}/zipalign -v -p 4 ${APK_PATH}/release/app-release-unsigned.apk ${APK_PATH}/release/app-release-aligned.apk
+      - ${ANDROID_HOME}/build-tools/${BUILD_TOOLS}/apksigner sign --ks ./android/RNDetoxTravisTest.keystore --out ${APK_PATH}/release/app-release.apk ${APK_PATH}/release/app-release-aligned.apk 
+      - ${ANDROID_HOME}/build-tools/${BUILD_TOOLS}/apksigner verify ${APK_PATH}/release/app-release.apk
+      - ${ANDROID_HOME}/build-tools/${BUILD_TOOLS}/zipalign -v -p 4 ${APK_PATH}/androidTest/release/app-release-androidTest.apk ${APK_PATH}/androidTest/release/app-release-aligned.apk
+      - ${ANDROID_HOME}/build-tools/${BUILD_TOOLS}/apksigner sign --ks ./android/RNDetoxTravisTest.keystore --out ${APK_PATH}/androidTest/release/app-release-androidTest.apk ${APK_PATH}/androidTest/release/app-release-aligned.apk
+      - ${ANDROID_HOME}/build-tools/${BUILD_TOOLS}/apksigner verify ${APK_PATH}/androidTest/release/app-release-androidTest.apk
     script:
       - npm run detox:android:release:test
